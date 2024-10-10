@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 
+import { ConnectButton } from "@/components/WalletConnect";
 
 
 export default function Home() {
@@ -12,7 +15,7 @@ export default function Home() {
             <Image src="/logooo.png" alt={"img"} height={"160"} width={"160"} />
           </div>
           <div>
-            <button className=" text-white border rounded-2xl p-2 border-red-600">CONNECT WALLET </button>
+            <ConnectButton />
           </div>
         </nav>
 
