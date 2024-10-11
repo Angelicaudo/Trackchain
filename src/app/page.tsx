@@ -5,8 +5,58 @@ import { IoIosSearch } from "react-icons/io";
 
 import { ConnectButton } from "@/components/WalletConnect";
 
+import { useState, useEffect } from "react";
+import { base } from "viem/chains";
+import { useReadContract } from "wagmi";
+import { namehash } from "viem/ens";
+
 
 export default function Home() {
+  const [nameHash, setNameHash] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+
+  const contractAddress = '0xC6d566A56A1aFf6508b41f6c90ff131615583BCD'; // L2Resolver Contract
+  const contractAbi = [
+    {
+      "inputs": [{ "internalType": "bytes32", "name": "node", "type": "bytes32" }],
+      "name": "addr",
+      "outputs": [{ "internalType": "address payable", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function",
+    }
+  ];
+
+  // Trigger the contract read when nameHash is set
+  const { data } = useReadContract({
+    abi: contractAbi,
+    address: contractAddress,
+    functionName: 'addr',
+    args: nameHash ? [nameHash] : undefined, // Only pass args when nameHash exists
+    chainId: base.id,
+  });
+
+  // Update walletAddress when the contract read returns data
+  useEffect(() => {
+    if (data) {
+      setWalletAddress(data as string);
+      console.log(walletAddress);
+    }
+  }, [data]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    // Check if the input ends with ".base.eth"
+    if (value.endsWith(".base.eth")) {
+      // Resolve basename to wallet address
+      const hash = namehash(value);
+
+      setNameHash(hash); // Update state to trigger contract read
+    }
+  };
+
+  // TODO: Abstract away the BNS resolution logic
+
   return (
     <div className=" bg-black">
       <section className="bg-heroImg bg-cover bg-center h-screen bg-repeat">
@@ -40,6 +90,7 @@ export default function Home() {
                   type="text"
                   placeholder="Search using item id"
                   className="w-full sm:w-[300px]  py-2 px-3 focus:outline-none placeholder:text-black"
+                  onChange={handleChange}
                 />
               </div>
             </div>
