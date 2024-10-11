@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         heroImg: "url('/bgImage.png')",
+        groupImg: "url('/groupSpot.png')",
       }, 
     },
   },
