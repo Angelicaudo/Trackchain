@@ -3,7 +3,7 @@ import { base, mainnet, baseSepolia } from 'wagmi/chains';
 import { coinbaseWallet } from 'wagmi/connectors';
  
 export const config = createConfig({
-  chains: [base, mainnet],
+  chains: [base, mainnet, baseSepolia],
   connectors: [
     coinbaseWallet({
       appName: 'TrackChain',
