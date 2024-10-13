@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import Providers from "../components/OnchainkitProvider";
+import NavBar from "@/components/NavBar";
 
 
 const geistSans = localFont({
@@ -31,7 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="bg-black">
+            <section className="bg-heroImg bg-cover bg-center h-screen bg-repeat">
+              <NavBar />
+              {children}
+            </section>
+          </div>
+        </Providers>
       </body>
     </html>
   );
