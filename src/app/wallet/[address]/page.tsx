@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link'
-import { TbArrowBackUp } from "react-icons/tb";
 import Image from 'next/image';
 
 import { useReadContract } from 'wagmi';
@@ -23,7 +22,7 @@ interface Item {
 }
 
 
-const TrackChainAddress = "0x9da1832cd9dd3ba900ea172ec4702318697df074";
+const TrackChainAddress = "0xAA11a1Ca9CE13B9cb7B6ca00270Eeec27bA15287";
 const TrackChainABI = [
   {
     "inputs": [
@@ -82,8 +81,7 @@ const TrackChainABI = [
 
 
 const OwnedItems = ({ params }: { params: { address: string } }) => {
-  // const address = params.address;
-  const address = "0xd85288006DcA5D7daeFD462eEdBF8899fD445B08"; // TODO: Remove this line and uncomment the top line
+  const address = params.address;
   const [items, setItems] = useState<Item[]>([]);
 
   const { data } = useReadContract({
