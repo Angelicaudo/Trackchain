@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { TbArrowBackUp } from "react-icons/tb";
 import Link from 'next/link'
 

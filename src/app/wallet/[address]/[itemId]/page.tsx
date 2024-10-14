@@ -163,7 +163,7 @@ export default function ItemHistory({ params }: { params: { address: string, ite
 
             <tbody>
               {item.ownershipHistory.map((item, index) => (
-                <tr>
+                <tr key={index}>
                   <td className="  px-4 py-2 "><Link href="#">{truncateAddress(item.currentOwner)}</Link></td>
                   <td className=" px-4 py-2">{blockTimestampToDate(item.dateTransferred)}</td>
                   <td className=" px-4 py-2"><Link href="#">{truncateAddress(item.previousOwner)}</Link> <br />
