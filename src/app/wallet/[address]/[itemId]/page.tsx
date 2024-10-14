@@ -129,8 +129,8 @@ export default function ItemHistory({ params }: { params: { address: string, ite
 
             <p>Item Name | {item.name}</p>
             <p>Item ID | {item.itemId}</p>
-            <p> Current Holder | <Link href="#">{truncateAddress(item.ownershipHistory[item.ownershipHistory.length - 1].currentOwner)}</Link>...</p>
-            <p> Listed by | <Link href="#">{truncateAddress(item.ownershipHistory[0].currentOwner)}</Link>...</p>
+            <p> Current Holder | <Link href="#">{truncateAddress(item.ownershipHistory[item.ownershipHistory.length - 1].currentOwner)}</Link></p>
+            <p> Listed by | <Link href="#">{truncateAddress(item.ownershipHistory[0].currentOwner)}</Link></p>
           </div>
 
           <div className="flex flex-row justify-center p-4 gap-6">
@@ -166,8 +166,8 @@ export default function ItemHistory({ params }: { params: { address: string, ite
                 <tr>
                   <td className="  px-4 py-2 "><Link href="#">{truncateAddress(item.currentOwner)}</Link></td>
                   <td className=" px-4 py-2">{blockTimestampToDate(item.dateTransferred)}</td>
-                  <td className=" px-4 py-2"><Link href="#">{truncateAddress(item.currentOwner)}..</Link> <br />
-                    <Link href="#">{truncateAddress(item.previousOwner)}...</Link></td>
+                  <td className=" px-4 py-2"><Link href="#">{truncateAddress(item.previousOwner)}</Link> <br />
+                    <Link href="#">{truncateAddress(item.currentOwner)}</Link></td>
                   <td className=" px-4 py-2 ">Successful</td>
                 </tr>
               ))}
