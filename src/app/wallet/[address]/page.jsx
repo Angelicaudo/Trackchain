@@ -9,19 +9,6 @@ import { baseSepolia } from "viem/chains";
 import { useState, useEffect } from "react";
 
 
-interface OwnershipRecord {
-  currentOwner: string;
-  previousOwner: string;
-  dateTransferred: number;
-}
-
-interface Item {
-    name: string;
-    itemId: string;
-    ownershipHistory: OwnershipRecord[];
-}
-
-
 const TrackChainAddress = "0xAA11a1Ca9CE13B9cb7B6ca00270Eeec27bA15287";
 const TrackChainABI = [
   {
@@ -80,9 +67,9 @@ const TrackChainABI = [
 ];
 
 
-const OwnedItems = ({ params }: { params: { address: string } }) => {
+const OwnedItems = ({ params }) => {
   const address = params.address;
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState([]);
 
   const { data } = useReadContract({
     abi: TrackChainABI,
@@ -94,7 +81,7 @@ const OwnedItems = ({ params }: { params: { address: string } }) => {
 
   useEffect(() => {
     if (data) {
-        setItems(data as Item[]); // Set the fetched items into the state
+        setItems(data); // Set the fetched items into the state
     }
   }, [data]);
 

@@ -12,22 +12,10 @@ import { useReadContract } from "wagmi";
 import { baseSepolia } from "viem/chains";
 
 
-interface OwnershipRecord {
-  currentOwner: string;
-  previousOwner: string;
-  dateTransferred: number;
-}
-  
-interface Item {
-  name: string;
-  itemId: string;
-  ownershipHistory: OwnershipRecord[];
-}
-
-const truncateAddress = (input: string) =>
+const truncateAddress = (input) =>
   input?.length > 13 ? `${input.substring(0, 11)}...` : input;
 
-const blockTimestampToDate = (timestamp: number) => {
+const blockTimestampToDate = (timestamp) => {
   const date = new Date(Number(timestamp) * 1000);
   return date.toLocaleString('en-GB', { hour12: true });
 }
@@ -89,11 +77,11 @@ const TrackChainABI = [
 	},
 ];
 
-export default function ItemHistory({ params }: { params: { address: string, itemId: string } }) {
+export default function ItemHistory({ params }) {
   const address = params.address;
   const itemId = params.itemId;
 
-  const [item, setItem] = useState<Item>({
+  const [item, setItem] = useState({
     name: "",
     itemId: "",
     ownershipHistory: [{
@@ -113,7 +101,7 @@ export default function ItemHistory({ params }: { params: { address: string, ite
 
   useEffect(() => {
     if (data) {
-        setItem(data as Item);
+        setItem(data);
     }
   }, [data]);
 

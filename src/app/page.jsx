@@ -2,59 +2,48 @@
 
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
+import { useBNSResolver } from "@/utils/bnsResolver";
 import { useState, useEffect } from "react";
-import { base } from "viem/chains";
-import { useReadContract } from "wagmi";
-import { namehash } from "viem/ens";
 import { useRouter } from "next/navigation";
+import { namehash } from "viem/ens";
+import { useReadContract } from "wagmi";
+import { baseSepolia } from "viem/chains";
 
 
 export default function Home() {
   const router = useRouter();
 
-  const [nameHash, setNameHash] = useState("");
+  const [nameHash, setNameHash] = useState(null);
+  const [formData, setFormData] = useState({basename: ""})
 
-  const contractAddress = '0xC6d566A56A1aFf6508b41f6c90ff131615583BCD'; // L2Resolver Contract
-  const contractAbi = [
-    {
-      "inputs": [{ "internalType": "bytes32", "name": "node", "type": "bytes32" }],
-      "name": "addr",
-      "outputs": [{ "internalType": "address payable", "name": "", "type": "address" }],
-      "stateMutability": "view",
-      "type": "function",
-    }
-  ];
-
-  // Trigger the contract read when nameHash is set
-  const { data } = useReadContract({
-    abi: contractAbi,
-    address: contractAddress,
-    functionName: 'addr',
-    args: nameHash ? [nameHash] : undefined, // Only pass args when nameHash exists
-    chainId: base.id,
-  });
+  const { data: walletAddress } = useBNSResolver(nameHash);
 
   // Update walletAddress when the contract read returns data
   useEffect(() => {
-    if (data && data !== "0x0000000000000000000000000000000000000000") {      
+    if (walletAddress) {      
       // Redirect to wallet page
-      router.push(`/wallet/${data}`);
+      router.push(`/wallet/${walletAddress}`);
     }
-  }, [data]);
+  }, [walletAddress]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
 
-    // Check if the input ends with ".base.eth"
-    if (value.endsWith(".base.eth")) {
-      // Resolve basename to wallet address
-      const hash = namehash(value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-      setNameHash(hash); // Update state to trigger contract read
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  // TODO: Abstract away the BNS resolution logic
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.basename.endsWith(".base.eth")) {
+      const hash = namehash(formData.basename);
+      setNameHash(hash);
+    }
+  }
 
   return (
         <div>
@@ -71,16 +60,18 @@ export default function Home() {
               </div>
 
               <div>
-
-                <div className="flex items-center  border-2 border-red-600 rounded-xl overflow-hidden w-full max-w-md bg-white text-black">
-                  <IoIosSearch className="h-8 w-8 text-stone-950 mx-3 text-8xl-" />
-                  <input
-                    type="text"
-                    placeholder="Search using base name"
-                    className="w-full sm:w-[300px]  py-2 px-3 focus:outline-none placeholder:text-black"
-                    onChange={handleChange}
-                  />
-                </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="flex items-center  border-2 border-red-600 rounded-xl overflow-hidden w-full max-w-md bg-white text-black">
+                    <IoIosSearch className="h-8 w-8 text-stone-950 mx-3 text-8xl-" />
+                    <input
+                      type="text"
+                      name="basename"
+                      placeholder="Search using base name"
+                      className="w-full sm:w-[300px]  py-2 px-3 focus:outline-none placeholder:text-black"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </form>
               </div>
             </div>
           </section>
