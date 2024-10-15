@@ -9,19 +9,6 @@ import { baseSepolia } from "viem/chains";
 import { useState, useEffect } from "react";
 
 
-interface OwnershipRecord {
-  currentOwner: string;
-  previousOwner: string;
-  dateTransferred: number;
-}
-
-interface Item {
-    name: string;
-    itemId: string;
-    ownershipHistory: OwnershipRecord[];
-}
-
-
 const TrackChainAddress = "0xAA11a1Ca9CE13B9cb7B6ca00270Eeec27bA15287";
 const TrackChainABI = [
   {
@@ -80,9 +67,9 @@ const TrackChainABI = [
 ];
 
 
-const OwnedItems = ({ params }: { params: { address: string } }) => {
+const OwnedItems = ({ params }) => {
   const address = params.address;
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState([]);
 
   const { data } = useReadContract({
     abi: TrackChainABI,
@@ -94,7 +81,7 @@ const OwnedItems = ({ params }: { params: { address: string } }) => {
 
   useEffect(() => {
     if (data) {
-        setItems(data as Item[]); // Set the fetched items into the state
+        setItems(data); // Set the fetched items into the state
     }
   }, [data]);
 
@@ -109,7 +96,7 @@ const OwnedItems = ({ params }: { params: { address: string } }) => {
 
         <section className="flex flex-col sm:flex-row  justify-center items-center gap-9 top-10 relative">
             {items.map((item, index) => (
-              <div className=" shadow-2xl rounded-2xl border-2 border-red-600 w-64 sm:w-72 text-white">
+              <div key={index} className=" shadow-2xl rounded-2xl border-2 border-red-600 w-64 sm:w-72 text-white">
                   <div className="flex flex-col justify-center items-center gap-4 py-6">
                       <div className=" flex flex-col items-center text-center border border-red-600 w-44 h-40- py-4  bg-white rounded-xl shadow-2xl">
                           <Image src="/boxImg.png" alt="" height={"160"} width={"160"} />

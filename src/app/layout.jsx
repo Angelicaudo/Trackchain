@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import Providers from "../components/OnchainkitProvider";
+import Providers from "@/components/OnchainkitProvider";
 import NavBar from "@/components/NavBar";
 
 
@@ -17,16 +16,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "TrackChain",
   description: "Track ownership history onchain",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children, }) {
   return (
     <html lang="en">
       <body

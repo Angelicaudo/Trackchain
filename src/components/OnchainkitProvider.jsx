@@ -3,15 +3,14 @@
 import { ReactNode } from "react";
 import { OnchainKitProvider } from "@coinbase/onchainkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { baseSepolia } from "viem/chains";
+import { baseSepolia, mainnet } from "viem/chains";
 import { WagmiProvider } from "wagmi";
 import { config } from "./WagmiConfig";
-
-type Props = { children: ReactNode };
+import { Chain } from 'viem';
 
 const queryClient = new QueryClient();
 
-function Providers({ children }: Props) {
+function Providers({ children }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>

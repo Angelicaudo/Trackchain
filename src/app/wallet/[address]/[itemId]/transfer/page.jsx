@@ -1,10 +1,11 @@
+
 import Image from "next/image";
 import Link from 'next/link'
 import { TbArrowBackUp } from "react-icons/tb";
 
 
 
-export default function TransferItem({ params }: { params: { address: string, itemId: string } }) {
+export default function TransferItem({ params }) {
   const address = params.address;
   const itemId = params.itemId
   

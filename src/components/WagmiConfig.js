@@ -1,9 +1,9 @@
 import { http, createConfig } from 'wagmi';
-import { base, mainnet, baseSepolia } from 'wagmi/chains';
+import { baseSepolia, base } from 'wagmi/chains';
 import { coinbaseWallet } from 'wagmi/connectors';
  
 export const config = createConfig({
-  chains: [base, mainnet, baseSepolia],
+  chains: [baseSepolia, base],
   connectors: [
     coinbaseWallet({
       appName: 'TrackChain',
@@ -11,15 +11,9 @@ export const config = createConfig({
     }),
   ],
   transports: {
-    [base.id]: http(),
-    [mainnet.id]: http(),
     [baseSepolia.id]: http(),
+    [base.id]: http(),
   },
   ssr: true
 });
 
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config;
-  }
-}
