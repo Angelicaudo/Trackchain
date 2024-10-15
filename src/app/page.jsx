@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
-import { useBNSResolver } from "@/utils/bnsResolver";
+import { useBNSResolver } from "../utils/bnsResolver";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { namehash } from "viem/ens";
-import { useReadContract } from "wagmi";
-import { baseSepolia } from "viem/chains";
 
 
 export default function Home() {
@@ -25,7 +23,6 @@ export default function Home() {
       router.push(`/wallet/${walletAddress}`);
     }
   }, [walletAddress]);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 
-import Providers from "@/components/OnchainkitProvider";
-import NavBar from "@/components/NavBar";
+import Providers from "../components/OnchainkitProvider";
+import NavBar from "../components/NavBar";
 
 
 const geistSans = localFont({
