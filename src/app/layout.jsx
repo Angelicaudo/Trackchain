@@ -1,9 +1,10 @@
 import localFont from "next/font/local";
 import "./globals.css";
 
-import Providers from "../components/OnchainkitProvider";
+import Providers from "../components/Providers";
 import NavBar from "../components/NavBar";
 
+import '@rainbow-me/rainbowkit/styles.css';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

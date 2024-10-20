@@ -16,16 +16,16 @@ export function ConnectButton() {
         <ConnectWallet className="text-white border rounded-2xl p-2 border-red-600">
           <ConnectWalletText>Connect Wallet</ConnectWalletText>
           <Avatar className="h-6 w-6" />
-          <Name />
+          <Name className="text-white" />
         </ConnectWallet>
         
         <WalletDropdown>
           <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
               <Avatar />
-              <Name />
-              <Address className={color.foregroundMuted} />
+              <Name className="text-white" />
+              <Address className="text-white" />
           </Identity>
-          <WalletDropdownDisconnect />
+          <WalletDropdownDisconnect className="text-white" />
         </WalletDropdown>
       </Wallet>
     </div>

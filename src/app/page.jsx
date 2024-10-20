@@ -18,8 +18,7 @@ export default function Home() {
 
   // Update walletAddress when the contract read returns data
   useEffect(() => {
-    if (walletAddress) {      
-      // Redirect to wallet page
+    if (walletAddress && walletAddress !== "0x0000000000000000000000000000000000000000") {
       router.push(`/wallet/${walletAddress}`);
     }
   }, [walletAddress]);
@@ -36,8 +35,12 @@ export default function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.basename.endsWith(".base.eth")) {
-      const hash = namehash(formData.basename);
+    if (formData.address.startsWith("0x")) {
+      router.push(`/wallet/${formData.address}`);
+    }
+
+    if (formData.address.endsWith(".base.eth")) {
+      const hash = namehash(formData.address);
       setNameHash(hash);
     }
   }
@@ -62,8 +65,8 @@ export default function Home() {
                     <IoIosSearch className="h-8 w-8 text-stone-950 mx-3 text-8xl-" />
                     <input
                       type="text"
-                      name="basename"
-                      placeholder="Search using base name"
+                      name="address"
+                      placeholder="Search using base name or wallet address"
                       className="w-full sm:w-[300px]  py-2 px-3 focus:outline-none placeholder:text-black"
                       onChange={handleChange}
                     />

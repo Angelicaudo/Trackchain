@@ -7,9 +7,11 @@ import { TbArrowBackUp } from "react-icons/tb";
 
 import { useEffect, useState } from "react";
 
-import { useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 
 import { baseSepolia } from "viem/chains";
+
+import { trackchainContract } from "@/contract/deployedContract"
 
 
 const truncateAddress = (input) =>
@@ -20,66 +22,11 @@ const blockTimestampToDate = (timestamp) => {
   return date.toLocaleString('en-GB', { hour12: true });
 }
 
-const TrackChainAddress = "0xAA11a1Ca9CE13B9cb7B6ca00270Eeec27bA15287";
-const TrackChainABI = [
-  {
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_itemId",
-				"type": "string"
-			}
-		],
-		"name": "getOwnershipHistory",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "itemId",
-						"type": "string"
-					},
-					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "currentOwner",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "previousOwner",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
-								"name": "dateTransferred",
-								"type": "uint256"
-							}
-						],
-						"internalType": "struct OwnershipHistoryTwo.OwnershipRecord[]",
-						"name": "ownershipHistory",
-						"type": "tuple[]"
-					}
-				],
-				"internalType": "struct OwnershipHistoryTwo.Item",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-];
-
 export default function ItemHistory({ params }) {
   const address = params.address;
   const itemId = params.itemId;
+
+  const account = useAccount();
 
   const [item, setItem] = useState({
     name: "",
@@ -92,8 +39,8 @@ export default function ItemHistory({ params }) {
   });
 
   const { data } = useReadContract({
-    abi: TrackChainABI,
-    address: TrackChainAddress,
+    abi: trackchainContract.abi,
+    address: trackchainContract.address,
     functionName: "getOwnershipHistory",
     args: [itemId],
     chainId: baseSepolia.id
@@ -122,7 +69,7 @@ export default function ItemHistory({ params }) {
           </div>
 
           <div className="flex flex-row justify-center p-4 gap-6">
-            <Link href={`/wallet/${address}/${itemId}/transfer`} className="bg-red-700 border-2 border-red-600 rounded-2xl px-8 py-1 text-white">TRANSFER</Link>
+            {account.address == address && <Link href={`/wallet/${address}/${itemId}/transfer`} className="bg-red-700 border-2 border-red-600 rounded-2xl px-8 py-1 text-white">TRANSFER</Link>}
             <Link href={`/wallet/${address}/`} className="shadow-2xl flex gap-3 items-center border-2 text-white border-red-600 rounded-2xl  px-8 py-2 ">BACK <span className="text-red-600 text-2xl"><TbArrowBackUp /></span></Link>
           </div>
         </div>
@@ -130,14 +77,14 @@ export default function ItemHistory({ params }) {
       {/* table history */}
 
       <section className=" flex flex-col justify-around items-center gap-14 top-32 relative">
-        <div className=" shadow-2xl border-2 border-red-600 rounded-2xl px-8 py-4">
+        <div className="bg-black shadow-2xl border-2 border-red-600 rounded-2xl px-8 py-4">
           <div className="py-6">
             <h1 className="text-white font-bold text-2xl">Ownership History</h1>
           </div>
 
 
           {/* table test */}
-          <table className="text-white ">
+          <table className="text-white bg-black ">
             <thead className="bg-black">
               <tr className="t">
                 <th className="w-3/12 px-4 py-2 text-left border-b">Holder <br />
