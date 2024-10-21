@@ -1,8 +1,6 @@
 "use client";
 
-import { OnchainKitProvider } from "@coinbase/onchainkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { baseSepolia, mainnet } from "viem/chains";
 import { WagmiProvider } from "wagmi";
 import { config } from "./WagmiConfig";
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';

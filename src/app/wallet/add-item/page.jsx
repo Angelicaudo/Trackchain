@@ -3,9 +3,8 @@
 import { TbArrowBackUp } from "react-icons/tb";
 import Link from 'next/link'
 import { useAccount, useWriteContract } from "wagmi";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { trackchainContract } from "@/contract/deployedContract";
-import { baseSepolia } from "viem/chains";
 import { useRouter } from "next/navigation";
 
 

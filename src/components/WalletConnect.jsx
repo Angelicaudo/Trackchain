@@ -6,7 +6,6 @@ import {
     WalletDropdownDisconnect,
 } from "@coinbase/onchainkit/wallet";
 import { Address, Name, Identity, Avatar } from "@coinbase/onchainkit/identity";
-import { color } from "@coinbase/onchainkit/theme";
 
 
 export function ConnectButton() {

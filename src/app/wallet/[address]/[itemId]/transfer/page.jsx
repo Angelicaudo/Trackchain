@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from 'next/link'
 import { TbArrowBackUp } from "react-icons/tb";
-import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { useReadContract, useWriteContract } from "wagmi";
 import { useState, useEffect } from "react";
 import { baseSepolia } from "viem/chains";
 import { namehash } from "viem/ens";
 import { useBNSResolver } from "@/utils/bnsResolver";
-import { useRouter } from "next/navigation";
 import { trackchainContract } from "@/contract/deployedContract"
 
 
